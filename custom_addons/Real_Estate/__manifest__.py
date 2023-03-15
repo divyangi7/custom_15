@@ -1,25 +1,19 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
 {
     'name': 'Real Estate',
-    'version': '1.2',
+    'version': '1.0.0',
     'category': '',
-    'summary': '',
+    'summary': 'real estate internal machinery',
     'description': """
 This module contains all the common features of Sales Management and eCommerce.
     """,
     'depends': [],
-    'data': [
-
-    ],
-    'demo': [
-
-    ],
+    'data': ['security\ir.model.access.csv'],
+    'demo': [],
     'installable': True,
     'auto_install': False,
-    'assets': {
-
-    },
+    'assets': {},
+    'license': 'LGPL-3'
 }

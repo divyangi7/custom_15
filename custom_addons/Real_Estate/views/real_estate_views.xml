@@ -1,7 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <!-- Top menu item -->
-            <menuitem id="sale_order_menu"
-            name="Orders"
-            parent="sale_menu_root"
+<field>
+
+        <!-- Top menu item -->
+        <menuitem id="real_estate_menu_root"
+            name="Real Estate"
+            active="False"
+            sequence="30"/>
+
+        <menuitem id="real_estate_advertisements_menu"
+            name="Advertisements"
+            parent="real_estate_menu_root"
             sequence="2"/>
+
+        <menuitem id="real_estate_Setting_menu"
+            name="Settings"
+            parent="real_estate_menu_root"
+            sequence="5"/>
+
+        <menuitem id="menu_setting_property_types"
+            name="Property types"
+            parent="real_estate_Setting_menu"
+            sequence="3"/>
+
+       <menuitem id="menu_setting_property_tags"
+            name="Property Tags"
+            parent="real_estate_Setting_menu"
+            sequence="2"/>
+
+       <record id="view_order_tree" model="ir.vi.view">
+               <field name="name">real_estate.order.tree</field>
+               <field name="model">real_estate.order</field>
+               <field name="arch" type="xml">
+                   <tree string="Properties" sample="1" >
+                       <field name="name" string="title" readonly="1"/>
+                       <field name="Post_code" string="Postcode"  />
+                       <field name="Bedrooms" optional="hide"/>
+                       <field name="Expected Price" optional="show"/>
+                       <field name="Living Area" readonly="1"/>
+                       <field name="Selling Price"  readonly="1" optional="show" />
+                       <field name="Date"  string="Available Form" readonly="1" optional="show"/>
+                       <field name="state" invisible="1"/>
+                   </tree>
+               </field>
+       </record>
+
+     <record id="view_order_form" model="ir.ui.view">
+            <field name="name">real_estate.order.form</field>
+            <field name="model">real_estate.order</field>
+            <field name="arch" type="xml">
+
+
+
+
+
+</odoo>

@@ -1,56 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<field>
+<odoo>
+
+        <record id="view_order_tree" model="ir.ui.view">
+            <field name="name">real_estate.order.tree</field>
+            <field name="model">real_estate.order</field>
+            <field name="arch" type="xml">
+                <tree string="Properties" >
+                    <field name="name" string="Title"/>
+                    <field name="description" string="Description" optional="hide"/>
+                    <field name="postcode" string="Post code" />
+                    <field name="bedrooms" string="Bed Rooms" optional="hide" />
+                    <field name="living_area" string="Living Area(sqm)" readonly="1" optional="hide"/>
+                    <field name="expected_price" string="Expected Price"/>
+                    <field name="selling_price" string="Selling Price" readonly="1"/>
+                    <field name="date_availability" string="Available From" readonly="1"/>
+                    <field name="garden" string="Garden" optional="hide"/>
+                    <field name="garden_area" string="Garden Area" optional="hide"/>
+                    <field name="garden_orientation" string="Garden orientation" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_order_form" model="ir.ui.view">
+            <field name="name">real_estate.order.form</field>
+            <field name="model">real_estate.order</field>
+            <field name="arch" type="xml">
+              <form string="Real Estate" >
+               <sheet>
+                   <group>
+                        <group>
+                            <field name="name" string="Title"/>
+                            <field name="postcode"/>
+                        </group>
+                       <group>
+                           <field name="date_availability"/>
+                           <field name="selling_price"/>
+                           <field name="living_area"/>
+                           <field name="garden_area"/>
+                       </group>
+                       <notebook>
+                           <page string="Description">
+                            <group>
+                                <field name="expected_price"/>
+                                <field name="bedrooms"/>
+                                <field name="garden"/>
+                                <field name="garden_orientation"/>
+                            </group>
+                           </page>
+                       </notebook>
+                   </group>
+               </sheet>
+              </form>
+            </field>
+        </record>
+
+        <record id="view_real_estate_search" model="ir.ui.view">
+            <field name="name">real_estate.order.search</field>
+            <field name="model">real_estate.order</field>
+            <field name="arch" type="xml">
+                    <search>
+                        <field name="name" filter_domain="['|', 'name']"/>
+                        <field name="selling_price"/>
+                        <field name="expected_price"/>
+                        <field name="selling_price"/>
+                        <filter name="garden_orientation" string="South" filter_domain="[('garden_orientation'), '=', 'South']"/>
+                    </search>
+            </field>
+        </record>
+
+        <record id="real_estate_model_action" model="ir.actions.act_window">
+            <field name="name">Real_Estate</field>
+            <field name="res_model">real_estate.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
 
         <!-- Top menu item -->
         <menuitem id="real_estate_menu_root"
             name="Real Estate"
-            active="False"
-            sequence="30"/>
+            sequence="0"/>
 
-        <menuitem id="real_estate_advertisements_menu"
-            name="Advertisements"
-            parent="real_estate_menu_root"
-            sequence="2"/>
+        <menuitem id="real_estate_advertisement"
+                  name="Advertisement"
+                  parent="real_estate_menu_root"
+                  action="real_estate_model_action"
+                  sequence="1"/>
 
-        <menuitem id="real_estate_Setting_menu"
-            name="Settings"
-            parent="real_estate_menu_root"
-            sequence="5"/>
+        <menuitem id="advertisement_properties"
+                  name="Properties"
+                  parent="real_estate_advertisement"
+                  action="real_estate_model_action"
+                  sequence="1"/>
 
-        <menuitem id="menu_setting_property_types"
-            name="Property types"
-            parent="real_estate_Setting_menu"
-            sequence="3"/>
+        <menuitem id="real_estate_settings"
+                  name="Settings"
+                  parent="real_estate_menu_root"
+                  sequence="2"/>
 
-       <menuitem id="menu_setting_property_tags"
-            name="Property Tags"
-            parent="real_estate_Setting_menu"
-            sequence="2"/>
+        <menuitem id="settings_properties"
+                  name="Property Type"
+                  parent="real_estate_settings"
+                  sequence="2"/>
 
-       <record id="view_order_tree" model="ir.vi.view">
-               <field name="name">real_estate.order.tree</field>
-               <field name="model">real_estate.order</field>
-               <field name="arch" type="xml">
-                   <tree string="Properties" sample="1" >
-                       <field name="name" string="title" readonly="1"/>
-                       <field name="Post_code" string="Postcode"  />
-                       <field name="Bedrooms" optional="hide"/>
-                       <field name="Expected Price" optional="show"/>
-                       <field name="Living Area" readonly="1"/>
-                       <field name="Selling Price"  readonly="1" optional="show" />
-                       <field name="Date"  string="Available Form" readonly="1" optional="show"/>
-                       <field name="state" invisible="1"/>
-                   </tree>
-               </field>
-       </record>
-
-     <record id="view_order_form" model="ir.ui.view">
-            <field name="name">real_estate.order.form</field>
-            <field name="model">real_estate.order</field>
-            <field name="arch" type="xml">
-
-
-
-
+        <menuitem id="setting_properties_types"
+                  name="Property Tags"
+                  parent="real_estate_settings"
+                  sequence="3"/>
 
 </odoo>
+

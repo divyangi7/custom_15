@@ -17,7 +17,7 @@ class RealEstateOrder(models.Model):
     _name = "real_estate.order"
     _description = "Real Estate Order"
 
-    name = fields.Char(string='Name', required=True, copy=False, readonly=False, default=lambda self: _('New'))
+    name = fields.Char(string='Name', required=True, copy=False)
     description = fields.Text(string='Description', required=False)
     postcode = fields.Char(string='Postcode', required=True)
     date_availability = fields.Date(string='Date_availability', copy=False, required=True, index=True)

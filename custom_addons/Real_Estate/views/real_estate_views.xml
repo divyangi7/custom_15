@@ -59,11 +59,13 @@
             <field name="model">real_estate.order</field>
             <field name="arch" type="xml">
                     <search>
-                        <field name="name" filter_domain="['|', 'name']"/>
+                        <field name="name" string="name"/>
                         <field name="selling_price"/>
                         <field name="expected_price"/>
                         <field name="selling_price"/>
-                        <filter name="garden_orientation" string="South" filter_domain="[('garden_orientation'), '=', 'South']"/>
+                        <filter name="filter_north" string="North" domain="[('garden_orientation', '=' , 'north')]"/>
+                        <filter name="selling_price" string="Price" domain="[('selling_price', '>', '2000')]"/>
+                        <filter name="group_by" string="Direction" context="{'group_by':'garden_orientation'}"/>
                     </search>
             </field>
         </record>
@@ -79,7 +81,7 @@
         <!-- Top menu item -->
         <menuitem id="real_estate_menu_root"
             name="Real Estate"
-            sequence="0"/>
+            sequence="-100"/>
 
         <menuitem id="real_estate_advertisement"
                   name="Advertisement"

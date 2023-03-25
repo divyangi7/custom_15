@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- property offers tree view -->
+
+       <record id="property_offers_tree" model="ir.ui.view">
+           <field name="name">property.offer.tree</field>
+           <field name="model">property.offer</field>
+           <field name="arch" type="xml">
+                   <tree string="Properties Offer" editable="bottom">
+                           <field name="price" string="Price"/>
+                           <field name="partner_id" string="Partner"/>
+                           <field name="status" string="Status"/>
+
+<!--                           <field name="validity_date" string="Validity (days)"/>-->
+<!--                           <field name="dead_line" string="Dead Line"/>-->
+
+                   </tree>
+           </field>
+       </record>
+
+    <!-- property offers form view -->
+
+       <record id="property_offers_form" model="ir.ui.view">
+            <field name="name">property.offer.form</field>
+            <field name="model">property.offer</field>
+            <field name="arch" type="xml">
+                    <form string="Properties Offer" >
+                            <sheet>
+                                <group>
+                                    <field name="price" string="Price"/>
+                                    <field name="partner_id" string="Partner"/>
+                                    <field name="status" string="Status"/>
+
+<!--                                    <field name="validity_date" string="Validity (days)"/>-->
+<!--                                    <field name="dead_line" string="Dead Line"/>-->
+                                </group>
+                            </sheet>
+                    </form>
+            </field>
+       </record>
+
+</odoo>

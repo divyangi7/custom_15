@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime, timedelta
@@ -12,10 +12,10 @@ from odoo.tools import float_is_zero, html_keep_url, is_html_empty
 
 from odoo.addons.payment import utils as payment_utils
 
+
 class realestateorder(models.Model):
     _name = "real_estate.order"
     _description = "Real Estate Order"
-
 
     name = fields.Char(string='Name', required=True)
     description = fields.Text(string='Description', required=False)
@@ -43,12 +43,15 @@ class realestateorder(models.Model):
     offer_ids = fields.One2many('property.offer', 'property_id', string='Offers')
     total = fields.Float(compute='_compute_total', string='Total Area')
     best_offer = fields.Float(compute='_compute_best_offer', string='Best Offer', optional='hide')
+    state = fields.Char(string='Status')
+    # canceled = fields.Boolean(default=False)
+    # sold = fields.Boolean(default=False)
 
     @api.onchange("garden")
     def _onchange_garden(self):
         if self.garden == True:
-            self.garden_area = 10
-            self.garden_orientation = "north"
+           self.garden_area = 10
+           self.garden_orientation = "north"
         else:
             self.garden_area = 0
             self.garden_orientation = None
@@ -68,31 +71,9 @@ class realestateorder(models.Model):
                         offer.best_offer = offer.offer_ids[i].price
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def cancel_property(self):
+        for property in self:
+            if property.sold:
+                raise ValidationError("Cannot cancel a property that has been sold.")
+            property.canceled = True
 

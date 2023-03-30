@@ -43,9 +43,17 @@ class realestateorder(models.Model):
     offer_ids = fields.One2many('property.offer', 'property_id', string='Offers')
     total = fields.Float(compute='_compute_total', string='Total Area')
     best_offer = fields.Float(compute='_compute_best_offer', string='Best Offer', optional='hide')
-    state = fields.Char(string='Status')
-    # canceled = fields.Boolean(default=False)
-    # sold = fields.Boolean(default=False)
+    state = fields.Selection([
+        ('new', 'New'),
+        ('offer', 'Offer'),
+        ('received', 'Received'),
+        ('offer accepted', 'Offer Accepted'),
+        ('sold', 'Sold'),
+        ('canceled', 'Canceled')
+    ], copy=False, string='Status', default='new')
+    cancel = fields.Boolean(default=False)
+    sold = fields.Boolean(default=False)
+
 
     @api.onchange("garden")
     def _onchange_garden(self):
@@ -71,9 +79,12 @@ class realestateorder(models.Model):
                         offer.best_offer = offer.offer_ids[i].price
 
 
-    def cancel_property(self):
-        for property in self:
-            if property.sold:
-                raise ValidationError("Cannot cancel a property that has been sold.")
-            property.canceled = True
+
+
+
+
+
+
+
+
 

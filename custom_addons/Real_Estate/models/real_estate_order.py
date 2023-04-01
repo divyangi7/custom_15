@@ -51,15 +51,15 @@ class realestateorder(models.Model):
         ('sold', 'Sold'),
         ('canceled', 'Canceled')
     ], copy=False, string='Status', default='new')
-    cancel = fields.Boolean(default=False)
-    sold = fields.Boolean(default=False)
 
+    # cancel = fields.Boolean(default=False)
+    # sold = fields.Boolean(default=False)
 
     @api.onchange("garden")
     def _onchange_garden(self):
         if self.garden == True:
-           self.garden_area = 10
-           self.garden_orientation = "north"
+            self.garden_area = 10
+            self.garden_orientation = "north"
         else:
             self.garden_area = 0
             self.garden_orientation = None
@@ -78,10 +78,22 @@ class realestateorder(models.Model):
                     if offer.offer_ids[rec].price < offer.offer_ids[i].price:
                         offer.best_offer = offer.offer_ids[i].price
 
+    def action_cancel(self):
+        for rec in self:
+            rec.state = "canceled"
+            if rec.state == "canceled":
+                raise UserError("A sold property cannot be canceled ")
+            else:
+                rec.state = "sold"
+            return True
 
-
-
-
+    def action_sold(self):
+        for rec in self:
+            rec.state = "sold"
+            if rec.state == "sold":
+                raise UserError("A canceled property cannot be sold")
+            else:
+                rec.state = "cancelled"
 
 
 

@@ -39,8 +39,8 @@
             <field name="arch" type="xml">
               <form string="Properties">
                   <header>
-                      <button name="action_sold" string="Sold"/>
-                      <button name="action_cancel" string="cancel"/>
+                      <button name="action_sold" string="Sold" type="object"/>
+                      <button name="action_cancel" string="cancel" type="object"/>
                   </header>
                   <sheet>
                       <h1><field name="name"/></h1>

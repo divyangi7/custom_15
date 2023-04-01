@@ -45,6 +45,17 @@ class Propertyoffer(models.Model):
         for record in self:
             record.validity = (fields.Datetime.to_datetime(record.date_deadline) - record.create_date).days
 
+    def action_refuse(self):
+        for rec in self:
+            rec.status == "refused"
+
+    def action_accept(self):
+        for rec in self:
+            rec.status == "accepted"
+
+
+
+
 
 
 

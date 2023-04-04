@@ -15,6 +15,8 @@ from odoo.addons.payment import utils as payment_utils
 class Propertytags(models.Model):
     _name = "property.tag"
     _description = "Real Estate Property Tag"
+    _order = "name"
 
     name = fields.Char(string='Name')
+    color = fields.Integer("Color Index")
 

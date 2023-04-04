@@ -8,6 +8,7 @@
            <field name="model">property.type</field>
            <field name="arch" type="xml">
                    <tree string="Properties Types">
+                           <field name="sequence" widget="handle"/>
                            <field name="name" string="name"/>
                    </tree>
            </field>
@@ -20,13 +21,26 @@
             <field name="model">property.type</field>
             <field name="arch" type="xml">
                     <form string="Properties Types">
+                        <field name="sequence" widget="handle"/>
                             <sheet>
-                                <group>
+                                 <group>
                                     <field name="name" string="name"/>
                                 </group>
+                                <notebook>
+                                    <page string="Properties">
+                                        <field name="property_id">
+                                            <tree>
+                                                <field name="name" string="Title"/>
+                                                <field name="expected_price"/>
+                                                <field name="state"/>
+                                            </tree>
+                                        </field>
+                                    </page>
+                                </notebook>
                             </sheet>
                     </form>
             </field>
        </record>
 
 </odoo>
+

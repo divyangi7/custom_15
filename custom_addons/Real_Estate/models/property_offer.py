@@ -17,6 +17,7 @@ from odoo.addons.payment import utils as payment_utils
 class Propertyoffer(models.Model):
     _name = "property.offer"
     _description = "Real Estate Property Offer"
+    _order = "price desc"
 
     price = fields.Float(string='Price')
     partner_id = fields.Many2one('res.partner', string='Partner', required=True)
@@ -29,6 +30,7 @@ class Propertyoffer(models.Model):
     validity = fields.Integer(string='Validity (days)', default=7)
     date_deadline = fields.Date(string='Dead line', compute='_compute_date_deadline', inverse='_inverse_date_deadline', store=True)
     create_date = fields.Datetime(default=fields.Datetime.now)
+    # property_type_id = fields.Many2one('property.type', string='property Type')
 
     @api.depends("price")
     def _compute_best_offer(self):
@@ -46,12 +48,62 @@ class Propertyoffer(models.Model):
             record.validity = (fields.Datetime.to_datetime(record.date_deadline) - record.create_date).days
 
     def action_refuse(self):
-        for rec in self:
-            rec.status == "refused"
+        if self.status != 'accepted':
+            self.status = 'refused'
+            return True
+
 
     def action_accept(self):
-        for rec in self:
-            rec.status == "accepted"
+        self.write({"status": "accepted"})
+        self.property_id.write({
+            "state": "offer_accepted",
+            "selling_price": self.price,
+            "buyer": self.partner_id})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            # self.status = 'accepted'
+            # property_id = self.property_id
+            # property_id.write({'buyer_id': self.partner_id})
+            # property_id.write({'selling_price': self.price})
+
+    # def action_accept(self):
+    #         self.status = 'accepted'
+    #         self.property_id.selling_price = self.price
+    #         self.property_id.buyer_id = self.partner_id
+
+    # @api.onchange('status')
+    # def onchange_status(self):
+    #     if self.status == 'accepted':
+    #         property_id = self.property_id
+    #         property_id.buyer_id = self.partner_id
+    #         property_id.selling_price = self.price
+
+
+
+
+
+
+
 
 
 

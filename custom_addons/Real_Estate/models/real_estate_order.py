@@ -16,6 +16,7 @@ from odoo.addons.payment import utils as payment_utils
 class realestateorder(models.Model):
     _name = "real_estate.order"
     _description = "Real Estate Order"
+    _order = "id desc"
 
     name = fields.Char(string='Name', required=True)
     description = fields.Text(string='Description', required=False)
@@ -37,8 +38,10 @@ class realestateorder(models.Model):
     ], copy=False, index=True, tracking=3, default='draft')
     property_type_id = fields.Many2one('property.type', string='Property Type')
     other_info = fields.Text(string='Other Info', required=False)
-    salesman_id = fields.Many2one('res.partner', string='Salesman')
-    buyer_id = fields.Many2one('res.users', string='Buyer')
+    salesman = fields.Many2one('res.users', string='Salesman')
+    buyer = fields.Many2one('res.partner', string='Buyer')
+    # salesman_id = fields.Many2one('res.users', string='Salesman', default='Mitchell Admin')
+    # buyer_id = fields.Many2one('res.partner', string='Buyer')
     tag_id = fields.Many2many('property.tag', string='Property Tag')
     offer_ids = fields.One2many('property.offer', 'property_id', string='Offers')
     total = fields.Float(compute='_compute_total', string='Total Area')
@@ -47,7 +50,7 @@ class realestateorder(models.Model):
         ('new', 'New'),
         ('offer', 'Offer'),
         ('received', 'Received'),
-        ('offer accepted', 'Offer Accepted'),
+        ('offer_accepted', 'Offer Accepted'),
         ('sold', 'Sold'),
         ('canceled', 'Canceled')
     ], copy=False, string='Status', default='new')
@@ -79,13 +82,10 @@ class realestateorder(models.Model):
                         offer.best_offer = offer.offer_ids[i].price
 
     def action_cancel(self):
-        for rec in self:
-            rec.state = "canceled"
-            if rec.state == "canceled":
-                raise UserError("A sold property cannot be canceled ")
-            else:
-                rec.state = "sold"
-            return True
+        if self.state != "sold":
+            self.state = "canceled"
+        else:
+            raise UserError("A Sold Properties cannot be Canceled!!")
 
     def action_sold(self):
         for rec in self:
@@ -94,6 +94,12 @@ class realestateorder(models.Model):
                 raise UserError("A canceled property cannot be sold")
             else:
                 rec.state = "cancelled"
+
+    @api.constrains('selling_price')
+    def _check_selling_price(self):
+        for rec in self:
+            if rec.selling_price < rec.expected_price * 0.9:
+                raise ValidationError(_("The selling price cannot be lower than 90% of the expected price."))
 
 
 

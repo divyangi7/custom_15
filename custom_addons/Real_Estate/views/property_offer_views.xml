@@ -10,12 +10,11 @@
                    <tree string="Properties Offer" editable="bottom">
                            <field name="price" string="Price"/>
                            <field name="partner_id" string="Partner"/>
-                           <button name="action_refuse" states="draft,open" type="object"  icon="fa-times"/>
-                           <button name="action_accept"  states="draft" type="object" icon="fa-check"/>
+                           <button name="action_refuse"  type="object"   icon="fa-times"/>
+                           <button name="action_accept"   type="object" icon="fa-check" />
                            <field name="status" string="Status"/>
                            <field name="validity" string="Validity (days)"/>
                            <field name="date_deadline" string="Dead Line"/>
-
                    </tree>
            </field>
        </record>

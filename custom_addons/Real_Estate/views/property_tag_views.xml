@@ -8,6 +8,7 @@
            <field name="model">property.tag</field>
            <field name="arch" type="xml">
                    <tree string="Properties Tags">
+                           <field name="color" widget="color_picker" />
                            <field name="name" string="Name"/>
                    </tree>
            </field>
@@ -22,6 +23,7 @@
                     <form string="Properties Tags">
                             <sheet>
                                 <group>
+                                    <field name="color" widget="color_picker" />
                                     <field name="name" string="Name"/>
                                 </group>
                             </sheet>

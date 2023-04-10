@@ -16,7 +16,7 @@
                     <field name="postcode" string="Postcode"/>
                     <field name="expected_price" string="Expected Price"/>
                     <field name="selling_price" string="Selling Price"/>
-                    <field name="date_availability" string="Date Availability"/>
+                    <field name="date_availability" string="Date Availability" optional="hide"/>
                     <field name="bedrooms" string="Bedrooms" optional="hide"/>
                     <field name="living_area" string="Living Area" optional="hide" />
                     <field name="facades" string="Facades" optional="hide"/>
@@ -50,12 +50,12 @@
                           <group>
 
                               <field name="tag_id" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                              <field name="property_type_id"/>
+                              <field name="property_type_id" options='{"no_create_edit": true}'/>
                               <field name="postcode"/>
 
                           </group>
                           <group>
-                              <field name="expected_price"/>
+                              <field name="expected_price" string="Available From"/>
                               <field name="selling_price"/>
                               <field name="best_offer"/>
 
@@ -69,13 +69,13 @@
                                    <field name="garage"/>
                                    <field name="garden"/>
                                    <field name="living_area"/>
-                                   <field name="garden_area"/>
-                                   <field name="garden_orientation"/>
+                                   <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
+                                   <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
                                    <field name="total"/>
                                   </group>
                               </page>
                               <page string="Offers">
-                                      <field name="offer_ids"/>
+                                      <field name="offer_ids" attrs="{'readonly': [('state', 'in', ('offer_accepted', 'sold', 'canceled'))]}"/>
                               </page>
                               <page string="Other Info">
                                   <group>

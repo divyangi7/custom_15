@@ -21,6 +21,11 @@
             <field name="model">property.type</field>
             <field name="arch" type="xml">
                     <form string="Properties Types">
+                        <div class="oe_button_box" name="button Box">
+                            <button class="oe_stat_button" type="object" name="action_view_property_type" icon="fa_usd">
+                                <fields name="offer_count" string="Offer" widget="statinfo"/>
+                            </button>
+                        </div>
                         <field name="sequence" widget="handle"/>
                             <sheet>
                                  <group>

@@ -21,7 +21,7 @@ class realestateorder(models.Model):
     name = fields.Char(string='Name', required=True)
     description = fields.Text(string='Description', required=False)
     postcode = fields.Char(string='Postcode', required=False)
-    date_availability = fields.Date(string='Available Date')
+    date_availability = fields.Date(string='Available Date', optional='hide')
     expected_price = fields.Float(string='Expected Price', store=True, required=False)
     selling_price = fields.Float(string='Selling Price', store=True)
     bedrooms = fields.Integer(string='Bedrooms')

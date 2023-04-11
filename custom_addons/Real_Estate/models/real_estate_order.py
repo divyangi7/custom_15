@@ -18,7 +18,7 @@ class realestateorder(models.Model):
     _description = "Real Estate Order"
     _order = "id desc"
 
-    name = fields.Char(string='Name', required=True)
+    name = fields.Char(string='Title', required=True)
     description = fields.Text(string='Description', required=False)
     postcode = fields.Char(string='Postcode', required=False)
     date_availability = fields.Date(string='Available Date', optional='hide')
@@ -102,7 +102,11 @@ class realestateorder(models.Model):
                 raise ValidationError(_("The selling price cannot be lower than 90% of the expected price."))
 
 
-
+    @api.ondelete(at_uninstall=False)
+    def _unlink_open(self):
+        for rec in self:
+            if rec.state not in ['new', 'canceled']:
+                raise UserError(_("Only new and canceled properties can be deleted."))
 
 
 

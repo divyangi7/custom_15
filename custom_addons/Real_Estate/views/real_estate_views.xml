@@ -89,6 +89,41 @@
             </field>
        </record>
 
+       <!-- kanban view -->
+
+    <record id="view_estate_kanban" model="ir.ui.view">
+        <field name="name">real_estate.kanban</field>
+        <field name="model">real_estate.order</field>
+        <field name="arch" type="xml">
+                <kanban >
+                    <field name="name" string="Title"/>
+                    <field name="expected_price"/>
+                    <field name="selling_price"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                  <ul>
+                                      <li>
+                                         Expected Price: <field name="expected_price"/>
+                                      </li>
+                                      <li>
+                                          <field name="state"/>
+                                      </li>
+                                      <li>
+                                          <field name="tag_id" widget="many2many_tags"/>
+                                      </li>
+                                  </ul>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+        </field>
+    </record>
+
+
+
+
     <!-- search view -->
 
        <record id="view_order_search" model="ir.ui.view">
@@ -119,12 +154,18 @@
    <record id="real_estate_action" model="ir.actions.act_window">
             <field name="name">Properties</field>
             <field name="res_model">real_estate.order</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,kanban,form</field>
        </record>
 
        <record id="property_types_action" model="ir.actions.act_window">
            <field name="name">Property Types</field>
            <field name="res_model">property.type</field>
+           <field name="view_mode">tree,form</field>
+       </record>
+
+       <record id="property_offer_action" model="ir.actions.act_window">
+           <field name="name">Property offer</field>
+           <field name="res_model">property.offer</field>
            <field name="view_mode">tree,form</field>
        </record>
 

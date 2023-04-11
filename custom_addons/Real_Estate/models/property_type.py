@@ -32,8 +32,7 @@ class propertytype(models.Model):
             rec.offer_count = len(rec.offer_ids)
 
 
-    def action_view_property_type(self):
-        return
+
 
 
 

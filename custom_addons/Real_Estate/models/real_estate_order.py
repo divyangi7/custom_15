@@ -38,7 +38,7 @@ class realestateorder(models.Model):
     ], copy=False, index=True, tracking=3, default='draft')
     property_type_id = fields.Many2one('property.type', string='Property Type')
     other_info = fields.Text(string='Other Info', required=False)
-    salesman = fields.Many2one('res.users', string='Salesman')
+    salesman = fields.Many2one('res.users', string='Salesman',default=lambda self: self.env.user)
     buyer = fields.Many2one('res.partner', string='Buyer')
     # salesman_id = fields.Many2one('res.users', string='Salesman', default='Mitchell Admin')
     # buyer_id = fields.Many2one('res.partner', string='Buyer')
@@ -85,15 +85,23 @@ class realestateorder(models.Model):
         if self.state != "sold":
             self.state = "canceled"
         else:
-            raise UserError("A Sold Properties cannot be Canceled!!")
+            raise UserError("A Sold Properties cannot be Canceled!!!")
+
 
     def action_sold(self):
-        for rec in self:
-            rec.state = "sold"
-            if rec.state == "sold":
-                raise UserError("A canceled property cannot be sold")
-            else:
-                rec.state = "cancelled"
+        if self.state != "canceled":
+            self.state = "sold"
+        else:
+            raise UserError("A canceled property cannot be sold!!!")
+
+
+    # def action_sold(self):
+    #     for rec in self:
+    #         rec.state = "sold"
+    #         if rec.state == "sold":
+    #             raise UserError("A canceled property cannot be sold")
+    #         else:
+    #             rec.state = "cancelled"
 
     @api.constrains('selling_price')
     def _check_selling_price(self):

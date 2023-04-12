@@ -60,11 +60,15 @@ class Propertyoffer(models.Model):
             "selling_price": self.price,
             "buyer": self.partner_id})
 
-
-
-
-
-
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        self.property_id.write({"state": "offer_received"})
+        statement = self.env["real_estate.order"].browse('offer_ids')
+        print(statement)
+        if statement.offer_price and statement.offer_price > self.price:
+            raise UserError(_("The offer must be higher"))
+        return res
 
 
 

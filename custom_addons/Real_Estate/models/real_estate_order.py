@@ -54,9 +54,13 @@ class realestateorder(models.Model):
         ('sold', 'Sold'),
         ('canceled', 'Canceled')
     ], copy=False, string='Status', default='new')
+    # company_id = fields.
+    company_id = fields.Many2one(
+        'res.company', string='Company',
+        default=lambda self: self.env.user.company_id,
+        required=True)
 
-    # cancel = fields.Boolean(default=False)
-    # sold = fields.Boolean(default=False)
+
 
     @api.onchange("garden")
     def _onchange_garden(self):

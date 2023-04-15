@@ -78,12 +78,17 @@ class realestateorder(models.Model):
 
     @api.depends("offer_ids.price")
     def _compute_best_offer(self):
-        for offer in self:
-            offer.best_offer = 0
-            for rec in range(len(offer.offer_ids)):
-                for i in range(rec + 1, len(offer.offer_ids)):
-                    if offer.offer_ids[rec].price < offer.offer_ids[i].price:
-                        offer.best_offer = offer.offer_ids[i].price
+        for rec in self:
+            if rec.offer_ids:
+                rec.best_offer = max(rec.offer_ids.mapped("price"))
+
+
+        # for offer in self:
+        #     offer.best_offer = 0
+        #     for rec in range(len(offer.offer_ids)):
+        #         for i in range(rec + 1, len(offer.offer_ids)):
+        #             if offer.offer_ids[rec].price < offer.offer_ids[i].price:
+        #                 offer.best_offer = offer.offer_ids[i].price
 
     def action_cancel(self):
         if self.state != "sold":

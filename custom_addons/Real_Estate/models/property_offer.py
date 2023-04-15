@@ -60,15 +60,35 @@ class Propertyoffer(models.Model):
             "selling_price": self.price,
             "buyer": self.partner_id})
 
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
-        self.property_id.write({"state": "offer_received"})
-        statement = self.env["real_estate.order"].browse('offer_ids')
-        print(statement)
-        if statement.offer_price and statement.offer_price > self.price:
-            raise UserError(_("The offer must be higher"))
+
+    def write(self, vals):
+        res = super().write(vals)
+        self.property_id.state = "received"
+        for rec in self:
+            if rec.property_id.best_offer and rec.property_id.best_offer > rec.price:
+                raise UserError(_("The offer must be higher"))
         return res
+
+
+
+    # def write(self,vals):
+    #     res = super().write()
+    #     self.property_id.state = "received"
+    #     for rec in self:
+    #         if rec.property_id.best_offer and rec.property_id.best_offer > rec.price:
+    #             raise UserError(_("The offer must be higher"))
+    #     return res
+    #
+
+    # @api.model
+    # def create(self, vals):
+    #     res = super().create(vals)
+    #     self.property_id.write({"state": "received"})
+    #     statement = self.env["real_estate.order"].browse('offer_ids')
+    #     print(statement)
+    #     if statement.property_id.best_offer and statement.property_id.best_offer > self.price:
+    #         raise UserError(_("The offer must be higher"))
+    #     return res
 
 
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="property_wizard_form" model="ir.ui.view">
+            <field name="name">property.wizard.form</field>
+            <field name="model">property.wizard</field>
+            <field name="arch" type="xml">
+                    <form>
+                        <group>
+                            <field name="salesman"/>
+                            <field name="buyer"/>
+                        </group>
+                    </form>
+            </field>
+       </record>
+
+
+        <record id="property_action" model="ir.actions.act_window">
+           <field name="name">Property cancel</field>
+           <field name="res_model">property.wizard</field>
+           <field name="view_mode">form</field>
+            <field name="target">new</field>
+           <field name="type">ir.actions.act_window</field>
+       </record>
+
+
+
+
+
+</odoo>

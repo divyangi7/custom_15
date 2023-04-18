@@ -26,16 +26,14 @@ class Propertyoffer(models.Model):
         ('refused', 'Refused'),
     ], copy=False)
     property_id = fields.Many2one('real_estate.order', string='Property', required=True)
-    best_offer = fields.Float(compute='_compute_best_offer', string='Best Offer', optional='hide')
+    # best_offer = fields.Float(compute='_compute_best_offer', string='Best Offer', optional='hide')
     validity = fields.Integer(string='Validity (days)', default=7)
     date_deadline = fields.Date(string='Dead line', compute='_compute_date_deadline', inverse='_inverse_date_deadline', store=True)
     create_date = fields.Datetime(default=fields.Datetime.now)
-    # property_type_id = fields.Many2one('property.type', string='property Type')
+    # propertytype = fields.Many2one("real.estate.properties", related='property_id.propertytype')
 
-    @api.depends("price")
-    def _compute_best_offer(self):
-        for rec in self:
-            rec.best_offer = rec.price
+
+
 
     @api.depends('validity')
     def _compute_date_deadline(self):
@@ -70,25 +68,6 @@ class Propertyoffer(models.Model):
         return res
 
 
-
-    # def write(self,vals):
-    #     res = super().write()
-    #     self.property_id.state = "received"
-    #     for rec in self:
-    #         if rec.property_id.best_offer and rec.property_id.best_offer > rec.price:
-    #             raise UserError(_("The offer must be higher"))
-    #     return res
-    #
-
-    # @api.model
-    # def create(self, vals):
-    #     res = super().create(vals)
-    #     self.property_id.write({"state": "received"})
-    #     statement = self.env["real_estate.order"].browse('offer_ids')
-    #     print(statement)
-    #     if statement.property_id.best_offer and statement.property_id.best_offer > self.price:
-    #         raise UserError(_("The offer must be higher"))
-    #     return res
 
 
 

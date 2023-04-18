@@ -41,7 +41,8 @@
 
                   <header>
                       <button name="action_sold" string="Sold" type="object"/>
-                      <button name="action_cancel" string="cancel" type="object"/>
+                      <button name="%(real_estate.property_action)d" string="cancel" type="action"/>
+<!--                      <button name="action_cancel" string="cancel" type="object"/>-->
                       <field name="state" widget="statusbar" statusbar_visible="new,received,offer_accepted,sold"/>
                   </header>
                   <sheet>
@@ -86,6 +87,12 @@
                               </page>
                           </notebook>
                   </sheet>
+                   <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
               </form>
             </field>
        </record>
@@ -130,6 +137,7 @@
                                             <field name="best_offer" widget="monetary"/>
                                         </strong>
                                     </div>
+
                                 </t>
                             </div>
                         </t>
@@ -228,5 +236,11 @@
             parent="real_estate_settings_menu"
             action="property_tags_action"
             sequence="10"/>
+
+        <menuitem id="property_menu"
+            name="Property cancel"
+            parent="real_estate_advertisement_menu"
+            action="property_action"
+            sequence="50"/>
 
 </odoo>

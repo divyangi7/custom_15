@@ -3,3 +3,4 @@ access_real_estate_order,real_estate.order,model_real_estate_order,,1,1,1,1
 access_property_types,property.type,model_property_type,,1,1,1,1
 access_property_tag,property.tag,model_property_tag,,1,1,1,1
 access_property_offer,property.offer,model_property_offer,,1,1,1,1
+access_property_wizard,property.wizard,model_property_wizard,,1,1,1,1

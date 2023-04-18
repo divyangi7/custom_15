@@ -9,12 +9,12 @@ from odoo import api, fields, models, SUPERUSER_ID, _
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.osv import expression
 from odoo.tools import float_is_zero, html_keep_url, is_html_empty
-
 from odoo.addons.payment import utils as payment_utils
 
 
 class realestateorder(models.Model):
     _name = "real_estate.order"
+    _inherit = "mail.thread", "mail.activity.mixin"
     _description = "Real Estate Order"
     _order = "id desc"
 
@@ -38,14 +38,14 @@ class realestateorder(models.Model):
     ], copy=False, index=True, tracking=3, default='draft')
     property_type_id = fields.Many2one('property.type', string='Property Type')
     other_info = fields.Text(string='Other Info', required=False)
-    salesman = fields.Many2one('res.users', string='Salesman',default=lambda self: self.env.user)
+    salesman = fields.Many2one('res.users', string='Salesman', default=lambda self: self.env.user)
     buyer = fields.Many2one('res.partner', string='Buyer')
     # salesman_id = fields.Many2one('res.users', string='Salesman', default='Mitchell Admin')
     # buyer_id = fields.Many2one('res.partner', string='Buyer')
     tag_id = fields.Many2many('property.tag', string='Property Tag')
     offer_ids = fields.One2many('property.offer', 'property_id', string='Offers')
     total = fields.Float(compute='_compute_total', string='Total Area')
-    best_offer = fields.Float(compute='_compute_best_offer', string='Best Offer', optional='hide')
+    best_offer = fields.Float(compute='_compute_best_offer_price', string='Best Offer', optional='hide')
     state = fields.Selection([
         ('new', 'New'),
         ('offer', 'Offer'),
@@ -59,7 +59,6 @@ class realestateorder(models.Model):
         'res.company', string='Company',
         default=lambda self: self.env.user.company_id,
         required=True)
-
 
 
     @api.onchange("garden")
@@ -77,18 +76,9 @@ class realestateorder(models.Model):
             rec.total = rec.garden_area + rec.living_area
 
     @api.depends("offer_ids.price")
-    def _compute_best_offer(self):
+    def _compute_best_offer_price(self):
         for rec in self:
-            if rec.offer_ids:
-                rec.best_offer = max(rec.offer_ids.mapped("price"))
-
-
-        # for offer in self:
-        #     offer.best_offer = 0
-        #     for rec in range(len(offer.offer_ids)):
-        #         for i in range(rec + 1, len(offer.offer_ids)):
-        #             if offer.offer_ids[rec].price < offer.offer_ids[i].price:
-        #                 offer.best_offer = offer.offer_ids[i].price
+            rec.best_offer = max(rec.offer_ids.mapped("price")) if rec.offer_ids else 0.0
 
     def action_cancel(self):
         if self.state != "sold":
@@ -103,14 +93,6 @@ class realestateorder(models.Model):
         else:
             raise UserError("A canceled property cannot be sold!!!")
 
-
-    # def action_sold(self):
-    #     for rec in self:
-    #         rec.state = "sold"
-    #         if rec.state == "sold":
-    #             raise UserError("A canceled property cannot be sold")
-    #         else:
-    #             rec.state = "cancelled"
 
     @api.constrains('selling_price')
     def _check_selling_price(self):

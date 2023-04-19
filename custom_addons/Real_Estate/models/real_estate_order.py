@@ -54,7 +54,7 @@ class realestateorder(models.Model):
         ('sold', 'Sold'),
         ('canceled', 'Canceled')
     ], copy=False, string='Status', default='new')
-    # company_id = fields.
+    # active = fields.Boolean(string="Active", default=False)
     company_id = fields.Many2one(
         'res.company', string='Company',
         default=lambda self: self.env.user.company_id,
@@ -73,11 +73,13 @@ class realestateorder(models.Model):
     @api.depends("garden_area", "living_area")
     def _compute_total(self):
         for rec in self:
+            rec.total = 0
             rec.total = rec.garden_area + rec.living_area
 
     @api.depends("offer_ids.price")
     def _compute_best_offer_price(self):
         for rec in self:
+            rec.best_offer = 0
             rec.best_offer = max(rec.offer_ids.mapped("price")) if rec.offer_ids else 0.0
 
     def action_cancel(self):

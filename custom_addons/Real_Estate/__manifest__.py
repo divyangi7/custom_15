@@ -10,7 +10,7 @@
     'description': """
 
     """,
-    'depends': ['mail'],
+    'depends': ['mail','sale'],
     'data': [
         'security/ir.model.access.csv',
         'wizard/property_wizard_views.xml',

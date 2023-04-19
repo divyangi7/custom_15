@@ -57,9 +57,11 @@
                           </group>
                           <group>
                               <field name="expected_price" string="Available From"/>
-                              <field name="selling_price"/>
+                              <field name="selling_price" avg = "Avg of selling price"/>
                               <field name="best_offer"/>
+<!--                              <field name="active" invisible="1" />-->
                               <field name="company_id"/>
+
 
                           </group>
                       </group>
@@ -147,7 +149,7 @@
      </record>
 
 
-<!--       </record>-->
+
 
     <!-- search view -->
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        <record id="property_cron" model="ir.cron">
+                <fields name="name">Check property status</fields>
+                <fields name="model_id" ref="model_real_estate_order"/>
+                <fields name="state">code</fields>
+                <fields name="type">ir.action.server</fields>
+                <fields name="code">model._property_cron_job()</fields>
+                <fields name="interval_number">1</fields>
+                <fields name="interval_type">days</fields>
+                <fields name="numbercall">-1</fields>
+        </record>
+    </data>
+
+</odoo>

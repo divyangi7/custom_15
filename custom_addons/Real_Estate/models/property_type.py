@@ -18,18 +18,18 @@ class propertytype(models.Model):
     _order = "name"
 
     name = fields.Char(string='name')
-    # property_id = fields.One2many('real_estate.order', 'property_type_id', string='Properties')
-    # offer_ids = fields.Many2many('property.offer', 'property_type_id')
     property_id = fields.One2many('real_estate.order', 'property_type_id', string='Properties')
     sequence = fields.Integer("Sequence", defualt=10)
     offer_ids = fields.Many2many('property.offer', 'property_type_id')
-    offer_count = fields.Integer(compute="compute_offer_count")
-
+    offer_count = fields.Integer(compute="_compute_offer_count")
 
     @api.depends('offer_ids')
     def _compute_offer_count(self):
         for rec in self:
+            rec.offer_count = 0
             rec.offer_count = len(rec.offer_ids)
+
+
 
 
 

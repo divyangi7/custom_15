@@ -41,8 +41,9 @@
 
                   <header>
                       <button name="action_sold" string="Sold" type="object"/>
-                      <button name="%(real_estate.property_action)d" string="cancel" type="action"/>
-<!--                      <button name="action_cancel" string="cancel" type="object"/>-->
+<!--                      <button name="%(real_estate.property_action)d" string="cancel" type="action"/>-->
+                      <button name="action_cancel" string="cancel" type="object"/>
+                      <button name="%(real_estate.property_action)d"  string="Create" type="action" />
                       <field name="state" widget="statusbar" statusbar_visible="new,received,offer_accepted,sold"/>
                   </header>
                   <sheet>
@@ -215,11 +216,20 @@
             action="real_estate_action"
             sequence="2"/>
 
+        <menuitem id="real_estate_configuration_menu"
+            name="Configuration"
+            parent="real_estate_menu"
+            action="real_estate_action"
+            sequence="5"/>
+
+
+
         <menuitem id="real_estate_settings_menu"
             name="settings"
             parent="real_estate_menu"
             action="real_estate_action"
             sequence="2"/>
+
 
         <menuitem id="advertisement_properties_menu"
             name="Properties"

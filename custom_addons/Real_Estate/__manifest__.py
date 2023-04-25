@@ -13,6 +13,7 @@
     'depends': ['mail','sale'],
     'data': [
         'security/ir.model.access.csv',
+        'Data/cron.xml',
         'wizard/property_wizard_views.xml',
         'views/real_estate_views.xml',
         'views/property_type_views.xml',
@@ -22,7 +23,8 @@
         'security/security.xml',
         'report/estate_property_reports.xml',
         'report/estate_property_templates.xml',
-        'Data/property_schedule.xml'
+        'views/res_config_settings_views.xml'
+
     ],
     'demo': [],
     'application': True,

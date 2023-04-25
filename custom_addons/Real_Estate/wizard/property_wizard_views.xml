@@ -10,6 +10,9 @@
                             <field name="salesman"/>
                             <field name="buyer"/>
                         </group>
+                        <group>
+                            <field name="date_cancel"/>
+                        </group>
                     </form>
             </field>
        </record>
@@ -22,9 +25,5 @@
             <field name="target">new</field>
            <field name="type">ir.actions.act_window</field>
        </record>
-
-
-
-
 
 </odoo>

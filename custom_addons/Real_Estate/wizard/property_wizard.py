@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime, timedelta
+import datetime
 
 from itertools import groupby
 import json
@@ -18,8 +18,22 @@ class Propertywizard(models.TransientModel):
     _name = "property.wizard"
     _description = "Property Wizard"
 
-    salesman = fields.Many2one('res.users', string='Salesman',default=lambda self: self.env.user)
+    salesman = fields.Many2one('res.users', string='Salesman', default=lambda self: self.env.user)
     buyer = fields.Many2one('res.partner', string='Buyer')
+    date_cancel = fields.Date(string="Date")
+
+    @api.model
+    def default_get(self, fields):
+        res = super(Propertywizard, self).default_get(fields)
+        res['date_cancel'] = datetime.date.today()
+        return res
+
+    # def create(self, vals):
+    #     res = super().write(vals)
+    #
+    #     return res
+
+
 
 
 

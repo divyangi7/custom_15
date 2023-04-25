@@ -110,4 +110,9 @@ class realestateorder(models.Model):
                 raise UserError(_("Only new and canceled properties can be deleted."))
 
 
+    @api.model
+    def _property_cron_job(self):
+        pass
+
+
 

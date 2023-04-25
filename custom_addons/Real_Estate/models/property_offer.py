@@ -72,18 +72,6 @@ class Propertyoffer(models.Model):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
             # self.status = 'accepted'
             # property_id = self.property_id
             # property_id.write({'buyer_id': self.partner_id})

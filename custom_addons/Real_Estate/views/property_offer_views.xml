@@ -31,7 +31,7 @@
                     <form string="Properties Offer" >
                             <sheet>
                                 <group>
-                                    <field name="price" string="Price" />
+                                    <field name="price" string="Price"/>
                                     <field name="partner_id" string="Partner"/>
                                     <field name="status" string="Status"/>
                                     <field name="validity" string="Validity (days)"/>

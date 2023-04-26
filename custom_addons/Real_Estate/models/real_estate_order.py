@@ -59,6 +59,7 @@ class realestateorder(models.Model):
         'res.company', string='Company',
         default=lambda self: self.env.user.company_id,
         required=True)
+    email_id = fields.Char(string="Email")
 
 
     @api.onchange("garden")
@@ -113,6 +114,30 @@ class realestateorder(models.Model):
     @api.model
     def _property_cron_job(self):
         pass
+
+     # name_search method
+
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        if args in self:
+            args = []
+            domain = args + ['|', ('property_type_id', operator, name), ('tag_id', operator, name)]
+            return super(realestateorder, self).search(domain, limit=limit).name_get()
+
+    def action_send_by_mail(self):
+        template = self.env.ref('real_estate.property_email')
+        for rec in self:
+            template.send_mail(rec.id)
+
+        # name_get_method
+
+
+    # @api.multi
+    # def name_get(self):
+    #     return [(rec.id, "%s:%s" % (rec.name, rec.postcode)) for rec in self]
+
+
 
 
 

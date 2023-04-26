@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <data noupdate="1">-->
+<!--        <record id="property_xyz" model="real_estate.order">-->
+<!--        <field name="property_type_id">House</field>-->
+<!--        <field name="name">XYZ</field>-->
+<!--        <field name="postcode">2563001</field>-->
+<!--        <field name="garden_orientation">North</field>-->
+<!--        </record>-->
+<!--    </data>-->
+
+</odoo>

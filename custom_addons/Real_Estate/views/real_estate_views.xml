@@ -43,7 +43,8 @@
                       <button name="action_sold" string="Sold" type="object"/>
 <!--                      <button name="%(real_estate.property_action)d" string="cancel" type="action"/>-->
                       <button name="action_cancel" string="cancel" type="object"/>
-                      <button name="%(real_estate.property_action)d"  string="Create" type="action" />
+                      <button name="%(real_estate.property_action)d"  string="Create" type="object" />
+                      <button name="action_send_by_mail" string="Send By Email" type="action"/>
                       <field name="state" widget="statusbar" statusbar_visible="new,received,offer_accepted,sold"/>
                   </header>
                   <sheet>
@@ -54,14 +55,16 @@
                               <field name="tag_id" widget="many2many_tags" options="{'color_field': 'color'}"/>
                               <field name="property_type_id" options='{"no_create_edit": true}'/>
                               <field name="postcode"/>
+                               <field name="email_id"/>
 
                           </group>
                           <group>
                               <field name="expected_price" string="Available From"/>
-                              <field name="selling_price" avg = "Avg of selling price"/>
+                              <field name="selling_price" />
                               <field name="best_offer"/>
 <!--                              <field name="active" invisible="1" />-->
                               <field name="company_id"/>
+
 
 
                           </group>

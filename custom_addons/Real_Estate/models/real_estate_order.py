@@ -14,7 +14,7 @@ from odoo.addons.payment import utils as payment_utils
 
 class realestateorder(models.Model):
     _name = "real_estate.order"
-    _inherit = "mail.thread", "mail.activity.mixin"
+    _inherit = "mail.thread", "mail.activity.mixin", "mail.composer.mixin"
     _description = "Real Estate Order"
     _order = "id desc"
 
@@ -115,18 +115,52 @@ class realestateorder(models.Model):
     def _property_cron_job(self):
         pass
 
+    def action_mail_send(self):
+        # ''' Opens a wizard to compose an email, with relevant mail template loaded by default '''
+        # self.ensure_one()
+        # template_id = self._find_mail_template()
+        # lang = self.env.context.get('lang')
+        # template = self.env['mail.template'].browse(template_id)
+        # if template.lang:
+        #     lang = template._render_lang(self.ids)[self.id]
+        # ctx = {
+        #     'default_model': 'real_estate.order',
+        #     'default_res_id': self.ids[0],
+        #     'default_use_template': bool(template_id),
+        #     'default_template_id': template_id,
+        #     'default_composition_mode': 'comment',
+        #     'mark_so_as_sent': True,
+        #     'custom_layout': "mail.mail_notification_paynow",
+        #     'proforma': self.env.context.get('proforma', False),
+        #     'force_email': True,
+        #     'model_description': self.with_context(lang=lang).type_name,
+        # }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(False, 'form')],
+            'view_id': False,
+            'target': 'new',
+            # 'context': ctx,
+        }
+
+
+
+
+
      # name_search method
 
 
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        if args in self:
-            args = []
-            domain = args + ['|', ('property_type_id', operator, name), ('tag_id', operator, name)]
-            return super(realestateorder, self).search(domain, limit=limit).name_get()
+    # @api.model
+    # def name_search(self, name='', args=None, operator='ilike', limit=100):
+    #     if args in self:
+    #         args = []
+    #         domain = args + ['|', ('property_type_id', operator, name), ('tag_id', operator, name)]
+    #         return super(realestateorder, self).search(domain, limit=limit).name_get()
 
     def action_send_by_mail(self):
-        template = self.env.ref('real_estate.property_email')
+        template = self.env.ref('real_estate.email_template_real_estate')
         for rec in self:
             template.send_mail(rec.id)
 

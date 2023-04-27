@@ -28,10 +28,7 @@ class Propertywizard(models.TransientModel):
         res['date_cancel'] = datetime.date.today()
         return res
 
-    # def create(self, vals):
-    #     res = super().write(vals)
-    #
-    #     return res
+
 
 
 

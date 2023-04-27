@@ -43,8 +43,8 @@
                       <button name="action_sold" string="Sold" type="object"/>
 <!--                      <button name="%(real_estate.property_action)d" string="cancel" type="action"/>-->
                       <button name="action_cancel" string="cancel" type="object"/>
-                      <button name="%(real_estate.property_action)d"  string="Create" type="object" />
-                      <button name="action_send_by_mail" string="Send By Email" type="action"/>
+                      <button name="%(real_estate.property_action)d"  string="Create" type="action" />
+                      <button name="action_mail_send" string="Send By Email" type="object"/>
                       <field name="state" widget="statusbar" statusbar_visible="new,received,offer_accepted,sold"/>
                   </header>
                   <sheet>
@@ -76,6 +76,7 @@
                                    <field name="facades"/>
                                    <field name="garage"/>
                                    <field name="garden"/>
+                                   <field name="date_availability"/>
                                    <field name="living_area"/>
                                    <field name="garden_area" attrs="{'invisible': [('garden', '=', False)]}"/>
                                    <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
